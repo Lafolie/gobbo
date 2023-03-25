@@ -1,15 +1,15 @@
-#Gobbo
+# Gobbo
 An interpreted programming langauge based on Lox, written in Nim.
 
 This is my follow-along project to to [Crafting Interpreters](https://craftinginterpreters.com/).
 
-##Building
+## Building
 Since this project is not intended to be used seriously, I will not be providing a nimble package.
 
 1. Clone the repo
 2. Build with `nim -c gobbo.nim`
 
-##Running Gobbo
+## Running Gobbo
 To run `.gob` source simply pass the path to file to gobbo.
 
 ```sh
