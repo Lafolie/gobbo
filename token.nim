@@ -33,7 +33,6 @@ type
 		lexeme*: string
 		line*: int
 		literal*: RootObj
-		
-let test = Token(kind: TokenType.And, lexeme: "test", line: 1)
 
-echo test
+# let test = Token(kind: TokenType.And, lexeme: "test", line: 1)
+# echo test

@@ -2,7 +2,7 @@
 
 from parseopt import nil
 import std/strformat
-# import token
+import error
 import scanner
 import cmd/help
 import cmd/version
@@ -10,33 +10,19 @@ import cmd/version
 # UNIX exit codes: https://man.freebsd.org/cgi/man.cgi?query=sysexits&apropos=0&sektion=0&manpath=FreeBSD+4.3-RELEASE&format=html
 
 # -----------------------------------------------------------------------------
-# Feedback & Errhand
-# -----------------------------------------------------------------------------
-var hadError: bool = false
-
-type
-	FeedbackType = enum
-		Info, Warning, Error
-
-proc report(ft: FeedbackType, line: int, where: string, message: string) =
-	echo &"{ft}:{where}:{line}: {message}"
-
-proc gobError(line: int, message: string) =
-	hadError = true
-	report(FeedbackType.Error, line, "", message)
-
-# -----------------------------------------------------------------------------
 # Main Interpreter
 # -----------------------------------------------------------------------------
 
-proc run(code: string) =
+proc run(code: string, path: string) =
+	let tokens = scanTokens(code, path)
+	echo tokens
 	# Scanner scanner = new Scanner(source);
 	# var tokens = newSeq[Token]()
 	
 	# for k, token in tokens:
 	# 	echo token
 
-	gobError(1, "AAAAAAAAHHHHH!!!")
+	# gobError(1, "AAAAAAAAHHHHH!!!")
 
 proc runFile(path: string) =
 	var code: string
@@ -47,8 +33,8 @@ proc runFile(path: string) =
 		echo "Error reading file ", path
 		quit(66) # input file issue
 
-	run(code)
-	if hadError:
+	run(code, path)
+	if checkForError():
 		quit(65) # input data incorrect
 
 # REPL Prompt
@@ -61,8 +47,8 @@ proc prompt(): bool =
 	except EOFError:
 		result = true
 
-	run(input)
-	hadError = false
+	run(input, "stdin")
+	# hadError = false
 	echo input
 
 # -----------------------------------------------------------------------------
