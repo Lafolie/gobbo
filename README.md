@@ -17,3 +17,17 @@ $ gobbo src.gob
 ```
 
 Gobbo uses a basic stdin REPL if no source file is given.
+
+## Differences from Lox
+As a bit of a challenge I have decided to stray from the source material a little:
+
+* Does not have `class`, has `struct` instead
+* Has arrays (dynamic)
+* Has hashmaps
+* Significant whitespace?
+* Optional semi-colons?
+
+## Syntax
+to-do
+
+Example programs can be found in `gobsrc/`
