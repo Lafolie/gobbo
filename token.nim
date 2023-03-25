@@ -1,7 +1,7 @@
 #? replace(sub = "\t", by = "  ")
 
 type
-	TokenType* = enum
+	TokenKind* = enum
 		# Single-char tokens
 		ParenOpen, ParenClose, BraceOpen, BraceClose, SquareOpen, SquareClose
 		Comma, Dot, Plus, Minus, Semicolon, Slash, Star,
@@ -27,7 +27,7 @@ type
 		EOF
 
 	Token* = object
-		kind*: TokenType
+		kind*: TokenKind
 		lexeme*: string
 		line*: int
 
