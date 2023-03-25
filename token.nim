@@ -1,7 +1,5 @@
 #? replace(sub = "\t", by = "  ")
 
-import std/tables
-
 type
 	TokenType* = enum
 		# Single-char tokens
