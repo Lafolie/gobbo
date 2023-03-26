@@ -5,12 +5,6 @@ import token
 import error
 
 type
-	NotationKind = enum
-		Decimal,
-		Hexadecimal,
-		Binary,
-		# Scientific
-
 	ScanState = object
 		path: string
 		source: string
@@ -93,7 +87,6 @@ proc readDecimal(state: var ScanState) =
 	echo "CUR:" & $cur
 
 	state.addNumber parsefloat(state.source[state.start .. cur - 1])
-
 
 proc readHex(state: var ScanState) =
 	while state.peek() in HexDigits:
