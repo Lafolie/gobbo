@@ -21,13 +21,13 @@ Gobbo uses a basic stdin REPL if no source file is given.
 ## Differences from Lox
 As a bit of a challenge I have decided to stray from the source material a little. Items with emphasis are the additional challenges from the book:
 
-* *Supports nested multiline comments*
-* Does not have `class`, has `struct` instead
-* Has arrays (dynamic)
-* Has hashmaps
-* Significant whitespace?
-* Optional semi-colons?
-* Supports multiple numerical notations (decimal, hex, binary, scientific)
+- [x] *Supports nested multiline comments*
+- [ ] Does not have `class`, has `struct` instead
+- [ ] Has arrays (dynamic)
+- [ ] Has hashmaps
+- [ ] Significant whitespace?
+- [ ] Optional semi-colons?
+- [x] Supports multiple numerical notations (decimal, hex, binary, scientific)
 
 Rules for identifiers are different:
 
