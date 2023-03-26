@@ -26,8 +26,11 @@ As a bit of a challenge I have decided to stray from the source material a littl
 * Has hashmaps
 * Significant whitespace?
 * Optional semi-colons?
+* Supports multiple numerical notations (decimal, hex, binary, scientific)
 
 ## Syntax
 to-do
+
+* Line endings must be LF (CRLF is erroneous)
 
 Example programs can be found in `gobsrc/`

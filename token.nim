@@ -27,9 +27,14 @@ type
 		EOF
 
 	Token* = object
-		kind*: TokenKind
 		lexeme*: string
 		line*: int
-
+		case kind*: TokenKind
+		of Number:
+			number*: float
+		of String:
+			str*: string
+		else:
+			discard
 # let test = Token(kind: TokenType.And, lexeme: "test", line: 1)
 # echo test
