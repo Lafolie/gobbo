@@ -28,6 +28,19 @@ As a bit of a challenge I have decided to stray from the source material a littl
 * Optional semi-colons?
 * Supports multiple numerical notations (decimal, hex, binary, scientific)
 
+Rules for identifiers are different:
+
+* Must start with alpha-numeric, or underscore (same as Lox)
+* Otherwise can contain any valid UTF-8 codepoints
+* Must not contain anything in the banned characterset
+
+The banned character set is defined as follows:
+
+```nim
+const IdentBannedChars = {'(', ')', '{', '}', '[', ']', ',', '.', '+', ';', '/', '*', '!', '=', '<', '>', '\x00' .. '\x20', '\xff'}
+```
+That is, basically all of the reserved symbols (except for `-` to allow kebab-case), and ASCII codes up to and including space, then ASCII delete. Anything else is fair game.
+
 ## Syntax
 to-do
 
