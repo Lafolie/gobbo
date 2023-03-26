@@ -143,10 +143,7 @@ proc readNumber(state: var ScanState, initialChar: char) =
 	else:
 		state.readDecimal()
 
-proc readIdentifier(state: var ScanState) =
-	# advance once since the first char was checked already
-	state.advance()
-	
+proc readIdentifier(state: var ScanState) =	
 	while not IdentBannedChars.contains(state.peek()):
 		state.advance()
 	
