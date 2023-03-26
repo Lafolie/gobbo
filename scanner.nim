@@ -15,11 +15,6 @@ type
 
 const BinDigits = {'0', '1'}
 
-# proc rune(str: static string): Rune =
-# 	when str.runeLen != 1:
-# 		{.error: "Provide a single rune".}
-# 	str.runeAt(0)
-
 proc add(state: var ScanState, kind: TokenKind) =
 	state.tokens.add(Token(kind: kind, lexeme: state.source[state.start..state.current - 1], line: state.line))
 
@@ -49,6 +44,12 @@ proc peek(state: ScanState): char =
 
 	return state.source[state.current]
 
+proc peekNext(state: ScanState): char =
+	if state.hasReachedEnd:
+		return '\0'
+
+	return state.source[state.current + 1]
+
 proc readString(state: var ScanState) =
 	while state.peek() != '"' and not state.hasReachedEnd():
 		if state.peek() == '\n':
@@ -68,23 +69,15 @@ proc readDecimal(state: var ScanState) =
 	while isDigit(state.peek()):
 		discard state.advance()
 
-	var cur: int = state.current
 	let next = state.peek()
 
 	# check for decimal/sci
-	if next == '.' or next == 'e':
+	if (next == '.' or next == 'e') and isDigit(state.peekNext()):
 		discard state.advance()
 		while isDigit(state.peek()):
 			discard state.advance()
 
-	# check if additional digits were found
-	if state.current > cur + 1:
-		cur = state.current
-	else:
-		# failed to find more digits, so rewind
-		state.current = cur
-
-	state.addNumber parsefloat(state.source[state.start .. cur - 1])
+	state.addNumber parsefloat(state.source[state.start .. state.current - 1])
 
 proc readHex(state: var ScanState) =
 	while state.peek() in HexDigits:
@@ -103,11 +96,13 @@ proc readNumber(state: var ScanState, initialChar: char) =
 	if initialChar == '0':
 		case state.peek()
 		of 'x':
-			discard state.advance()
-			state.readHex()
+			if state.peekNext() in HexDigits:
+				discard state.advance()
+				state.readHex()
 		of 'b':
-			discard state.advance()
-			state.readBin()
+			if state.peekNext() in BinDigits:
+				discard state.advance()
+				state.readBin()
 		else:
 			discard state.advance()
 			state.readDecimal()
