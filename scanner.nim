@@ -172,7 +172,7 @@ proc scanToken(state: var ScanState) =
 	of '+': state.add Plus
 	of '-': state.add Minus
 	of ';': state.add Semicolon
-	of '*': state.add Star
+	of '*': state.add Slash
 	of '!': state.add(if state.match('='): ExclamationEqual else: Exclamation)
 	of '=': state.add(if state.match('='): EqualEqual else: Equal)
 	of '<': state.add(if state.match('='): LessEqual else: Less)
@@ -180,8 +180,18 @@ proc scanToken(state: var ScanState) =
 	
 	# comments
 	of '/':
-		if state.match('/'):
-			# find & ignore comments
+		if state.match('*'):
+			# multi-line comment
+			while state.peek() != '*' and not state.hasReachedEnd():
+				state.advance()
+
+			if (not state.hasReachedEnd()) and state.peekNext() == '/':
+				state.advance()
+				state.advance()
+
+
+		elif state.match('/'):
+			# single-line comment
 			while state.peek() != '\n' and not state.hasReachedEnd():
 				state.advance()
 		else:

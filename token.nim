@@ -4,7 +4,7 @@ type
 	TokenKind* = enum
 		# Single-char tokens
 		ParenOpen, ParenClose, BraceOpen, BraceClose, SquareOpen, SquareClose
-		Comma, Dot, Plus, Minus, Semicolon, Slash, Star,
+		Comma, Dot, Plus, Minus, Semicolon, Star, Slash,
 
 		# One/Two-char tokens
 		Exclamation, ExclamationEqual,
