@@ -84,8 +84,6 @@ proc readDecimal(state: var ScanState) =
 		# failed to find more digits, so rewind
 		state.current = cur
 
-	echo "CUR:" & $cur
-
 	state.addNumber parsefloat(state.source[state.start .. cur - 1])
 
 proc readHex(state: var ScanState) =
