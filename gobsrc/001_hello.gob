@@ -1,1 +1,23 @@
+// this is a comment
 echo "Hello World";
+A
+/*
+this 
+is a m
+ultiline
+comment
+*/
+B
+var x = 256
+
+/*
+/*
+/*
+	/*
+	var y = 2 * 4 / 8
+	*/
+*/
+*/
+*/
+
+echo x

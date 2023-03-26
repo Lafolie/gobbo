@@ -151,6 +151,40 @@ proc readIdentifier(state: var ScanState) =
 	let kind = Keywords.getOrDefault(txt, Identifier)
 	state.addIdentifier(kind, txt)
 
+# -- Multi-line Comments Handler ----------------------------------------------
+
+proc scanMultilineComment(state: var ScanState) =
+	var nestCount = 1
+
+	while nestCount > 0 and not state.hasReachedEnd():
+		case state.peek()
+		of '*':
+			# found comment close
+			if state.peekNext() == '/':
+				nestCount -= 1
+		
+		of '/':
+			# found comment open
+			if state.peekNext() == '*':
+				nestCount += 1
+
+		of '\n':
+			echo "newline"
+			state.line += 1
+
+		of '\r':
+			gobError(state.path, state.line, "Carriage Return found. Gobbo source must use LF line endings.")
+
+		else:
+			discard
+
+		state.advance()
+
+	echo "AFTER LOOP: " & state.peek()
+	echo "LINE: " & $state.line
+	# consume the final /
+	state.advance()
+
 # -- Main Scanner -------------------------------------------------------------
 
 proc scanToken(state: var ScanState) =
@@ -178,14 +212,7 @@ proc scanToken(state: var ScanState) =
 	# comments
 	of '/':
 		if state.match('*'):
-			# multi-line comment
-			while state.peek() != '*' and not state.hasReachedEnd():
-				state.advance()
-
-			if (not state.hasReachedEnd()) and state.peekNext() == '/':
-				state.advance()
-				state.advance()
-
+			state.scanMultilineComment()
 
 		elif state.match('/'):
 			# single-line comment
